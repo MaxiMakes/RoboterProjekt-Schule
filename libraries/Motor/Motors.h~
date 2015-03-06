@@ -1,0 +1,21 @@
+#ifndef Motors_H 
+#define Motors_H
+
+class Motor{
+    public:
+        //Setup Pins	    
+        void setLeftMotorPin(short echo);
+        void setRightMotorPin(short trig);  
+        //Get Pins
+        short getLeftMotorPin();
+        short getRightMotorPin();        
+        void setSpeed(short l, short r);
+	void setZero(short duration);
+        //constructor
+        Motor(short lMotor, short rMotor);
+    private:
+        short LPin;
+        short RPin;
+
+};
+#endif

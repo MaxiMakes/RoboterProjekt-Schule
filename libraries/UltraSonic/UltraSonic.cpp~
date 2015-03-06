@@ -1,0 +1,48 @@
+#include <UltraSonic.h>
+#include <Arduino.h> 
+
+Motor:Motor(short lMotor, short rMotor){
+
+    echoPin = echo;
+    trigPin = trig;
+    pinMode(trigPin, OUTPUT);
+    pinMode(echoPin, INPUT);
+}
+
+int Motor::drive(byte l, byte r){
+  //convert the logic-level from 0 ~ 255 to 100 ~ -100
+  l = l *(-1);
+  if(l > 0){
+    l = map(l, 1, 100, 129, 254);
+  }
+  else if(l < 0){
+    l = map(l, -100, -1, 1, 127);
+  }
+  else l = 128;  
+  
+  if(r > 0){
+    r = map(r, 1, 100, 129, 254);
+  }
+  else if(r < 0){
+    r = map(r, -100, -1, 1, 127);
+  }
+  else r = 128;  
+  //write to PWM-Pin
+  analogWrite(motorL, l);
+  analogWrite(motorR, r);  
+}
+
+
+
+void UltraSonic::setEchoPin(short echo){
+    echoPin = echo;
+    pinMode(echoPin, INPUT);
+}
+void UltraSonic::setTriggerPin(short trig){
+    trigPin = trig;
+    pinMode(trigPin, OUTPUT);
+}    
+
+long UltraSonic::microsecondsToCentimeters(long microseconds){
+    return microseconds / 29 / 2;
+}
